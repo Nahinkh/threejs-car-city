@@ -7,7 +7,7 @@ export class CameraSystem {
 
   private car: Car;
 
-  private offset = new THREE.Vector3(0, 5, 10);
+  private offset = new THREE.Vector3(0, 5, 12);
 
   constructor(camera: THREE.PerspectiveCamera, car: Car) {
     this.camera = camera;
