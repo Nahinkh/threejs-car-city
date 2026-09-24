@@ -9,101 +9,60 @@ import { City } from "./objects/City";
 import { InputSystem } from "./systems/InputSystem";
 import { AnimationSystem } from "./systems/AnimationSystem";
 import { CameraSystem } from "./systems/CameraSystem";
+import { LightingSystem } from "./systems/LightingSystem";
 
 // -----------------------------------------
 // Scene
 // -----------------------------------------
 
-const scene =
-  new THREE.Scene();
+const scene = new THREE.Scene();
 
-scene.background =
-  new THREE.Color(
-    0x101827
-  );
+scene.background = new THREE.Color(0x101827);
 
-scene.fog =
-  new THREE.Fog(
-    0x101827,
-    40,
-    180
-  );
+scene.fog = new THREE.Fog(0x101827, 40, 180);
 
 // -----------------------------------------
 // Camera
 // -----------------------------------------
 
-const camera =
-  new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth /
-      window.innerHeight,
-    0.1,
-    1000
-  );
-
-camera.position.set(
-  0,
-  5,
-  12
+const camera = new THREE.PerspectiveCamera(
+  60,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000,
 );
+
+camera.position.set(0, 5, 12);
 
 // -----------------------------------------
 // Renderer
 // -----------------------------------------
 
-const renderer =
-  new THREE.WebGLRenderer({
-    antialias: true,
-  });
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+});
 
-renderer.setSize(
-  window.innerWidth,
-  window.innerHeight
-);
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-renderer.setPixelRatio(
-  Math.min(
-    window.devicePixelRatio,
-    2
-  )
-);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-renderer.shadowMap.enabled =
-  true;
+renderer.shadowMap.enabled = true;
 
-renderer.shadowMap.type =
-  THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-document.body.appendChild(
-  renderer.domElement
-);
+document.body.appendChild(renderer.domElement);
 
 // -----------------------------------------
 // Lighting
 // -----------------------------------------
 
-const ambientLight =
-  new THREE.AmbientLight(
-    0xffffff,
-    0.45
-  );
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
 
-scene.add(
-  ambientLight
-);
+scene.add(ambientLight);
 
-const sun =
-  new THREE.DirectionalLight(
-    0xffffff,
-    2
-  );
+const sun = new THREE.DirectionalLight(0xffffff, 2);
 
-sun.position.set(
-  20,
-  30,
-  10
-);
+sun.position.set(20, 30, 10);
 
 sun.castShadow = true;
 
@@ -113,76 +72,52 @@ scene.add(sun);
 // Road
 // -----------------------------------------
 
-const road =
-  new Road();
+const road = new Road();
 
-scene.add(
-  road.group
-);
+scene.add(road.group);
 
 // -----------------------------------------
 // Car
 // -----------------------------------------
 
-const car =
-  new Car();
+const car = new Car();
+const lighting = new LightingSystem(scene, car);
 
-car.group.position.set(
-  0,
-  0.8,
-  5
-);
+car.group.position.set(0, 0.8, 5);
 
-scene.add(
-  car.group
-);
+scene.add(car.group);
 
 // -----------------------------------------
 // City
 // -----------------------------------------
 
-const city =
-  new City();
+const city = new City();
 
-scene.add(
-  city.group
-);
+scene.add(city.group);
 
 // -----------------------------------------
 // Input
 // -----------------------------------------
 
-const input =
-  new InputSystem();
+const input = new InputSystem();
 
 // -----------------------------------------
 // Animation
 // -----------------------------------------
 
-const animation =
-  new AnimationSystem(
-    car,
-    road,
-    city,
-    input
-  );
+const animation = new AnimationSystem(car, road, city, input);
 
 // -----------------------------------------
 // Camera
 // -----------------------------------------
 
-const cameraSystem =
-  new CameraSystem(
-    camera,
-    car
-  );
+const cameraSystem = new CameraSystem(camera, car);
 
 // -----------------------------------------
 // Clock
 // -----------------------------------------
 
-const clock =
-  new THREE.Clock();
+const clock = new THREE.Clock();
 
 // -----------------------------------------
 // Animation Loop
@@ -199,12 +134,19 @@ function animate() {
   const elapsedTime =
     clock.elapsedTime;
 
+  // Car + road + city
   animation.update(
-    delta,  
+    delta,
     elapsedTime
   );
 
+  // Camera + mouse
   cameraSystem.update();
+
+  // Dynamic lights
+  lighting.update(
+    elapsedTime
+  );
 
   renderer.render(
     scene,
@@ -218,18 +160,10 @@ animate();
 // Resize
 // -----------------------------------------
 
-window.addEventListener(
-  "resize",
-  () => {
-    camera.aspect =
-      window.innerWidth /
-      window.innerHeight;
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
 
-    camera.updateProjectionMatrix();
+  camera.updateProjectionMatrix();
 
-    renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
-    );
-  }
-);  
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
