@@ -588,41 +588,6 @@ Road and city objects are reused to create an extended driving environment effic
 
 ---
 
-
-Add project screenshots here.
-
-### Home Page
-
-```text
-[ Add Screenshot ]
-```
-
-### 3D Driving Scene
-
-```text
-[ Add Screenshot ]
-```
-
-### Keyboard Controls
-
-```text
-[ Add Screenshot ]
-```
-
-### Mouse Camera Interaction
-
-```text
-[ Add Screenshot ]
-```
-
-### Lighting / Headlights
-
-```text
-[ Add Screenshot ]
-```
-
----
-
 ## Academic Project
 
 **Course:** CSE 444 — Computer Graphics & Animation  
