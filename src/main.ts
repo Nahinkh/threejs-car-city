@@ -11,159 +11,288 @@ import { AnimationSystem } from "./systems/AnimationSystem";
 import { CameraSystem } from "./systems/CameraSystem";
 import { LightingSystem } from "./systems/LightingSystem";
 
-// -----------------------------------------
-// Scene
-// -----------------------------------------
-
-const scene = new THREE.Scene();
-
-scene.background = new THREE.Color(0x101827);
-
-scene.fog = new THREE.Fog(0x101827, 40, 180);
+import { HomePage } from "./pages/HomePage";
+import { DrivingPage } from "./pages/DrivingPage";
 
 // -----------------------------------------
-// Camera
+// Application
 // -----------------------------------------
 
-const camera = new THREE.PerspectiveCamera(
-  60,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000,
-);
+const app = document.querySelector<HTMLDivElement>("#app");
 
-camera.position.set(0, 5, 12);
+if (!app) {
+  throw new Error("App container not found.");
+}
 
 // -----------------------------------------
-// Renderer
+// Home Page
 // -----------------------------------------
 
-const renderer = new THREE.WebGLRenderer({
-  antialias: true,
-});
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-renderer.shadowMap.enabled = true;
-
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-document.body.appendChild(renderer.domElement);
+function showHomePage() {
+  new HomePage(app!, () => {
+    window.location.hash = "drive";
+  });
+}
 
 // -----------------------------------------
-// Lighting
+// Driving Page
 // -----------------------------------------
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+function showDrivingPage() {
+  const drivingPage = new DrivingPage(app!);
 
-scene.add(ambientLight);
+  drivingPage.render();
 
-const sun = new THREE.DirectionalLight(0xffffff, 2);
+  const container = drivingPage.getCanvasContainer();
 
-sun.position.set(20, 30, 10);
-
-sun.castShadow = true;
-
-scene.add(sun);
+  startDrivingScene(container);
+}
 
 // -----------------------------------------
-// Road
+// Three.js Driving Scene
 // -----------------------------------------
 
-const road = new Road();
+function startDrivingScene(container: HTMLElement) {
+  // -----------------------------------------
+  // Scene
+  // -----------------------------------------
 
-scene.add(road.group);
+  const scene = new THREE.Scene();
 
-// -----------------------------------------
-// Car
-// -----------------------------------------
+  scene.background = new THREE.Color(0x101827);
 
-const car = new Car();
-const lighting = new LightingSystem(scene, car);
-
-car.group.position.set(0, 0.8, 5);
-
-scene.add(car.group);
-
-// -----------------------------------------
-// City
-// -----------------------------------------
-
-const city = new City();
-
-scene.add(city.group);
-
-// -----------------------------------------
-// Input
-// -----------------------------------------
-
-const input = new InputSystem();
-
-// -----------------------------------------
-// Animation
-// -----------------------------------------
-
-const animation = new AnimationSystem(car, road, city, input);
-
-// -----------------------------------------
-// Camera
-// -----------------------------------------
-
-const cameraSystem = new CameraSystem(camera, car);
-
-// -----------------------------------------
-// Clock
-// -----------------------------------------
-
-const clock = new THREE.Clock();
-
-// -----------------------------------------
-// Animation Loop
-// -----------------------------------------
-
-function animate() {
-  requestAnimationFrame(
-    animate
+  scene.fog = new THREE.Fog(
+    0x101827,
+    40,
+    180,
   );
 
-  const delta =
-    clock.getDelta();
+  // -----------------------------------------
+  // Camera
+  // -----------------------------------------
 
-  const elapsedTime =
-    clock.elapsedTime;
-
-  // Car + road + city
-  animation.update(
-    delta,
-    elapsedTime
+  const camera = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000,
   );
 
-  // Camera + mouse
-  cameraSystem.update();
+  camera.position.set(0, 5, 12);
 
-  // Dynamic lights
-  lighting.update(
-    elapsedTime
+  // -----------------------------------------
+  // Renderer
+  // -----------------------------------------
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+  });
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight,
   );
 
-  renderer.render(
-    scene,
-    camera
+  renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 2),
+  );
+
+  renderer.shadowMap.enabled = true;
+
+  renderer.shadowMap.type =
+    THREE.PCFSoftShadowMap;
+
+  container.appendChild(
+    renderer.domElement,
+  );
+
+  // -----------------------------------------
+  // Lighting
+  // -----------------------------------------
+
+  const ambientLight =
+    new THREE.AmbientLight(
+      0xffffff,
+      0.45,
+    );
+
+  scene.add(ambientLight);
+
+  const sun =
+    new THREE.DirectionalLight(
+      0xffffff,
+      2,
+    );
+
+  sun.position.set(
+    20,
+    30,
+    10,
+  );
+
+  sun.castShadow = true;
+
+  scene.add(sun);
+
+  // -----------------------------------------
+  // Road
+  // -----------------------------------------
+
+  const road = new Road();
+
+  scene.add(road.group);
+
+  // -----------------------------------------
+  // Car
+  // -----------------------------------------
+
+  const car = new Car();
+
+  car.group.position.set(
+    0,
+    0.8,
+    5,
+  );
+
+  scene.add(car.group);
+
+  // -----------------------------------------
+  // Dynamic Car Lighting
+  // -----------------------------------------
+
+  const lighting =
+    new LightingSystem(
+      scene,
+      car,
+    );
+
+  // -----------------------------------------
+  // City
+  // -----------------------------------------
+
+  const city = new City();
+
+  scene.add(city.group);
+
+  // -----------------------------------------
+  // Input
+  // -----------------------------------------
+
+  const input =
+    new InputSystem();
+
+  // -----------------------------------------
+  // Animation
+  // -----------------------------------------
+
+  const animation =
+    new AnimationSystem(
+      car,
+      road,
+      city,
+      input,
+    );
+
+  // -----------------------------------------
+  // Camera System
+  // -----------------------------------------
+
+  const cameraSystem =
+    new CameraSystem(
+      camera,
+      car,
+    );
+
+  // -----------------------------------------
+  // Clock
+  // -----------------------------------------
+
+  const clock =
+    new THREE.Clock();
+
+  // -----------------------------------------
+  // Animation Loop
+  // -----------------------------------------
+
+  function animate() {
+    requestAnimationFrame(
+      animate,
+    );
+
+    const delta =
+      clock.getDelta();
+
+    const elapsedTime =
+      clock.elapsedTime;
+
+    // Car movement
+    animation.update(
+      delta,
+      elapsedTime,
+    );
+
+    // Mouse camera
+    cameraSystem.update();
+
+    // Dynamic lighting
+    lighting.update(
+      elapsedTime,
+    );
+
+    // Render
+    renderer.render(
+      scene,
+      camera,
+    );
+  }
+
+  animate();
+
+  // -----------------------------------------
+  // Resize
+  // -----------------------------------------
+
+  function handleResize() {
+    camera.aspect =
+      window.innerWidth /
+      window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight,
+    );
+  }
+
+  window.addEventListener(
+    "resize",
+    handleResize,
   );
 }
 
-animate();
-
 // -----------------------------------------
-// Resize
+// Router
 // -----------------------------------------
 
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
+function handleRoute() {
+  const route =
+    window.location.hash;
 
-  camera.updateProjectionMatrix();
+  if (route === "#drive") {
+    showDrivingPage();
+  } else {
+    showHomePage();
+  }
+}
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+// -----------------------------------------
+// Start Application
+// -----------------------------------------
+
+window.addEventListener(
+  "hashchange",
+  handleRoute,
+);
+
+handleRoute();

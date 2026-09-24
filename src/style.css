@@ -1,22 +1,1027 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+  min-height: 100%;
 
-body {
   background: #101827;
 }
 
-canvas {
+body {
+  width: 100%;
+  min-height: 100%;
+
+  margin: 0;
+
+  background: #101827;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #ffffff;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+}
+
+
+/* =========================================
+   HOME PAGE
+========================================= */
+
+.home-page {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display: flex;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(65, 105, 160, 0.14),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 50% 70%,
+      rgba(40, 70, 110, 0.08),
+      transparent 35%
+    ),
+    #101827;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   HOME BACKGROUND GRID
+========================================= */
+
+.home-background {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 0;
+
+  opacity: 0.12;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    );
+
+  background-size: 60px 60px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent
+    );
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent
+    );
+}
+
+
+/* =========================================
+   HOME CONTENT
+========================================= */
+
+.home-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(
+    1050px,
+    calc(100% - 40px)
+  );
+
+  padding: 80px 0 90px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+/* =========================================
+   HOME BADGE
+========================================= */
+
+.home-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  backdrop-filter: blur(10px);
+
+  color: #9ca8bb;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.14em;
+}
+
+
+/* =========================================
+   HERO TITLE
+========================================= */
+
+.home-content h1 {
+  max-width: 900px;
+
+  margin-top: 24px;
+
+  font-size: clamp(
+    52px,
+    8vw,
+    100px
+  );
+
+  line-height: 0.95;
+
+  letter-spacing: -0.06em;
+
+  font-weight: 700;
+}
+
+.home-content h1 span {
   display: block;
+
+  background:
+    linear-gradient(
+      100deg,
+      #ffffff,
+      #7895bd
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
+
+/* =========================================
+   HERO DESCRIPTION
+========================================= */
+
+.home-description {
+  max-width: 650px;
+
+  margin-top: 30px;
+
+  color: #9ca8bb;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   START BUTTON
+========================================= */
+
+.start-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+
+  margin-top: 34px;
+
+  padding: 12px 14px 12px 22px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(14px);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.start-button:hover {
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border-color:
+    rgba(255, 255, 255, 0.3);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 35px
+    rgba(0, 0, 0, 0.25);
+}
+
+.start-button:active {
+  transform: translateY(0);
+}
+
+.start-arrow {
+  display: flex;
+
+  width: 34px;
+  height: 34px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+
+  font-size: 18px;
+}
+
+
+/* =========================================
+   PROJECT FEATURES
+========================================= */
+
+.project-features {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 12px;
+
+  width: 100%;
+
+  max-width: 850px;
+
+  margin-top: 55px;
+}
+
+.feature-card {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 20px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.feature-card:hover {
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  border-color:
+    rgba(255, 255, 255, 0.12);
+
+  transform: translateY(-3px);
+}
+
+.feature-number {
+  color: #66758d;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.feature-card h3 {
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.feature-card p {
+  margin-top: 4px;
+
+  color: #7f8ba0;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   CONTRIBUTORS SECTION
+========================================= */
+
+.contributors-section {
+  width: 100%;
+
+  max-width: 900px;
+
+  margin-top: 80px;
+
+  text-align: center;
+}
+
+.section-label {
+  color: #66758d;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+}
+
+.contributors-section h2 {
+  margin-top: 8px;
+
+  color: #ffffff;
+
+  font-size: 30px;
+
+  letter-spacing: -0.03em;
+
+  font-weight: 650;
+}
+
+.contributors {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 14px;
+
+  margin-top: 28px;
+}
+
+
+/* =========================================
+   CONTRIBUTOR CARD
+========================================= */
+
+.contributor-card {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  padding: 22px 16px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.contributor-card:hover {
+  transform: translateY(-4px);
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  border-color:
+    rgba(255, 255, 255, 0.14);
+}
+
+
+/* =========================================
+   CONTRIBUTOR IMAGE
+========================================= */
+
+.contributor-image {
+  width: 82px;
+  height: 82px;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.15);
+
+  background: #1a2435;
+}
+
+.contributor-image img {
+  display: block;
+
   width: 100%;
   height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================
+   CONTRIBUTOR TEXT
+========================================= */
+
+.contributor-card h3 {
+  margin-top: 14px;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.contributor-card p {
+  max-width: 190px;
+
+  margin-top: 6px;
+
+  color: #748197;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   HOME FOOTER
+========================================= */
+
+.home-footer {
+  position: absolute;
+
+  left: 30px;
+  right: 30px;
+  bottom: 25px;
+
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  pointer-events: none;
+
+  color: #59667a;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+}
+
+
+/* =========================================
+   DRIVING PAGE
+========================================= */
+
+.driving-page {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background: #101827;
+}
+
+
+/* =========================================
+   THREE.JS CONTAINER
+========================================= */
+
+.three-container {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+.three-container canvas {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================
+   DRIVING OVERLAY
+========================================= */
+
+.driving-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   DRIVING HEADER
+========================================= */
+
+.driving-header {
+  position: absolute;
+
+  top: 24px;
+  left: 30px;
+  right: 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: center;
+}
+
+.driving-brand {
+  justify-self: center;
+
+  color:
+    rgba(255, 255, 255, 0.9);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+}
+
+
+/* =========================================
+   DRIVING BUTTONS
+========================================= */
+
+.driving-button {
+  pointer-events: auto;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  width: fit-content;
+
+  padding: 9px 13px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius: 8px;
+
+  background:
+    rgba(8, 13, 23, 0.55);
+
+  backdrop-filter: blur(12px);
+
+  color: #d8deea;
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.driving-button:last-child {
+  justify-self: end;
+}
+
+.driving-button:hover {
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border-color:
+    rgba(255, 255, 255, 0.22);
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.driving-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   CONTROLS PANEL
+========================================= */
+
+.controls-panel {
+  position: absolute;
+
+  left: 30px;
+  bottom: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  width: 230px;
+
+  padding: 16px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius: 14px;
+
+  background:
+    rgba(8, 13, 23, 0.68);
+
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 15px 50px
+    rgba(0, 0, 0, 0.25);
+
+  color: #a7b1c2;
+
+  font-size: 11px;
+}
+
+.controls-panel::before {
+  content: "CONTROLS";
+
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+}
+
+
+/* =========================================
+   CONTROL ROW
+========================================= */
+
+.control-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-height: 26px;
+}
+
+.control-row span:last-child {
+  margin-left: auto;
+
+  color: #8c98aa;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   KEYBOARD KEY
+========================================= */
+
+.key {
+  display: flex;
+
+  width: 25px;
+  height: 25px;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.14);
+
+  border-radius: 6px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  box-shadow:
+    inset 0 -2px 0
+    rgba(255, 255, 255, 0.04);
+}
+
+
+/* =========================================
+   MOUSE CONTROL
+========================================= */
+
+.mouse-icon {
+  display: flex;
+
+  width: 25px;
+  height: 25px;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.14);
+
+  border-radius: 6px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+
+/* =========================================
+   MOBILE / TABLET
+========================================= */
+
+@media (max-width: 800px) {
+  .home-content {
+    width: calc(100% - 30px);
+
+    padding-top: 65px;
+    padding-bottom: 70px;
+  }
+
+  .home-content h1 {
+    font-size:
+      clamp(
+        48px,
+        15vw,
+        70px
+      );
+  }
+
+  .home-description {
+    max-width: 550px;
+
+    font-size: 14px;
+  }
+
+  .project-features {
+    grid-template-columns: 1fr;
+
+    max-width: 400px;
+  }
+
+  .contributors {
+    grid-template-columns: 1fr;
+  }
+
+  .contributor-card {
+    width: 100%;
+
+    max-width: 300px;
+
+    margin: auto;
+  }
+
+  .home-footer {
+    display: none;
+  }
+
+  .driving-header {
+    top: 15px;
+
+    left: 15px;
+    right: 15px;
+  }
+
+  .driving-brand {
+    font-size: 9px;
+  }
+
+  .driving-button {
+    padding: 8px 10px;
+  }
+
+  .controls-panel {
+    left: 15px;
+    bottom: 15px;
+
+    width: 200px;
+
+    padding: 12px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .home-content {
+    padding-top: 55px;
+  }
+
+  .home-badge {
+    max-width: 90%;
+
+    font-size: 9px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .home-content h1 {
+    margin-top: 20px;
+
+    font-size: 48px;
+  }
+
+  .home-description {
+    margin-top: 22px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+  }
+
+  .start-button {
+    margin-top: 28px;
+  }
+
+  .project-features {
+    margin-top: 42px;
+  }
+
+  .contributors-section {
+    margin-top: 65px;
+  }
+
+  .contributors-section h2 {
+    font-size: 26px;
+  }
+
+  .driving-header {
+    grid-template-columns:
+      auto 1fr auto;
+
+    gap: 8px;
+  }
+
+  .driving-brand {
+    font-size: 8px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .driving-button {
+    padding: 7px 9px;
+
+    font-size: 9px;
+  }
+
+  .controls-panel {
+    width: 185px;
+
+    font-size: 10px;
+  }
+
+  .key,
+  .mouse-icon {
+    width: 23px;
+    height: 23px;
+  }
 }
