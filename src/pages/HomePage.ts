@@ -2,10 +2,7 @@ export class HomePage {
   private container: HTMLElement;
   private onStart: () => void;
 
-  constructor(
-    container: HTMLElement,
-    onStart: () => void,
-  ) {
+  constructor(container: HTMLElement, onStart: () => void) {
     this.container = container;
     this.onStart = onStart;
 
@@ -99,59 +96,71 @@ export class HomePage {
               <div class="contributor-card">
 
                 <div class="contributor-image">
-                  <img
-                    src="/contributors/student-1.jpg"
+                    <img
+                    src="/contributors/Md Abdul Halim Khan.jpg"
                     alt="Student 1"
-                  />
+                    />
                 </div>
 
                 <h3>
-                  Student Name 1
+                    MD ABDUL HALIM KAHN
                 </h3>
 
-                <p>
-                  Department of Computer Science & Engineering
-                </p>
+            <p class="contributor-department">
+                Department of Computer Science & Engineering
+            </p>
 
-              </div>
+            <p class="contributor-university">
+                Southeast University
+            </p>
+
+        </div>
 
               <div class="contributor-card">
 
-                <div class="contributor-image">
-                  <img
-                    src="/contributors/student-2.jpg"
-                    alt="Student 2"
-                  />
-                </div>
+  <div class="contributor-image">
+    <img
+      src="/contributors/Md Sangram.png"
+      alt="Student 1"
+    />
+  </div>
 
-                <h3>
-                  Student Name 2
-                </h3>
+  <h3>
+    Md Sangram
+  </h3>
 
-                <p>
-                  Department of Computer Science & Engineering
-                </p>
+  <p class="contributor-department">
+    Department of Computer Science & Engineering
+  </p>
 
-              </div>
+  <p class="contributor-university">
+    Southeast University
+  </p>
+
+</div>
 
               <div class="contributor-card">
 
-                <div class="contributor-image">
-                  <img
-                    src="/contributors/student-3.jpg"
-                    alt="Student 3"
-                  />
-                </div>
+  <div class="contributor-image">
+    <img
+      src="/contributors/Md Nur Hossan Zisan.png"
+      alt="Student 1"
+    />
+  </div>
 
-                <h3>
-                  Student Name 3
-                </h3>
+  <h3>
+    Md Nur Hossan Zisan
+  </h3>
 
-                <p>
-                  Department of Computer Science & Engineering
-                </p>
+  <p class="contributor-department">
+    Department of Computer Science & Engineering
+  </p>
 
-              </div>
+  <p class="contributor-university">
+    Southeast University
+  </p>
+
+</div>
 
             </div>
 
@@ -169,15 +178,10 @@ export class HomePage {
     `;
 
     const startButton =
-      this.container.querySelector<HTMLButtonElement>(
-        "#start-driving",
-      );
+      this.container.querySelector<HTMLButtonElement>("#start-driving");
 
-    startButton?.addEventListener(
-      "click",
-      () => {
-        this.onStart();
-      },
-    );
+    startButton?.addEventListener("click", () => {
+      this.onStart();
+    });
   }
 }
